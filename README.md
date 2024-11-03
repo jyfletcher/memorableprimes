@@ -27,3 +27,4 @@ Adjust numWorkers to set the number of goroutines used in testing numbers in the
 - Maybe use some even more simplified non-deterministic primality tests to more quickly get candidates that be tested more thoroughly later
 - Use command line args instead of changing the source for the start, stop, and numWorkers values
 - Save state so that the process can be stopped and restarted
+- Profiling. Most of the heavy lifting is done with ProbablyPrime but the task is so CPU intensive that any savings would be valuable
