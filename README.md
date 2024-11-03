@@ -12,7 +12,7 @@ Note that a value of 10 tests the number: 12345678910987654321
 
 So the size of the numbers, and thus the time to test them, grows quickly.
 
-I've tested up to just under 13000 and ranges of 1000 (13000-14000) with 4 workers can take weeks. The 12-13k range with 4 works can spike in memory usage but typically hangs around 80MB.
+I've tested up to just under 13000 and ranges of 1000 (13000-14000) with 4 workers can take weeks. The 12-13k range with 4 workers can spike in memory usage but typically hangs around 80MB.
 
 ## Usage
 
