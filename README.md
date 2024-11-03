@@ -6,6 +6,8 @@
 
 This was just some fun code testing for memorable primes as described in [The Most Wanted Prime Number - Numberphile](https://www.youtube.com/watch?v=vKlVNFOHJ9I)
 
+From the video the only known memorable primes are at 10 and 2446.
+
 Note that a value of 10 tests the number: 12345678910987654321
 
 So the size of the numbers, and thus the time to test them, grows quickly.
