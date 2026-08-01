@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/big"
 	"strconv"
@@ -8,11 +9,10 @@ import (
 	"sync"
 )
 
+// Known memorable primes at: 10 2446
+
 func main() {
-	// Known memorable primes at: 10 2446
-	start := 14002
-	stop := 15000
-	numWorkers := 3
+	start, numWorkers := getArgs()
 
 	workChan := make(chan int)
 	primesChan := make(chan int)
@@ -21,7 +21,7 @@ func main() {
 	var wg sync.WaitGroup
 
 	// Fire up the work producer
-	go workProducer(start, stop, workChan, primesChan, nonPrimesChan, &wg)
+	go workProducer(start, workChan, primesChan, nonPrimesChan, &wg)
 
 	// Fire up the workers
 	for w := 0; w < numWorkers; w++ {
@@ -35,14 +35,15 @@ func main() {
 			if !ok {
 				primesChan = nil
 			} else {
-				fmt.Printf("\nFound prime at %v\n", prime)
+				fmt.Printf("\nFound probable prime at %v\n", prime)
 				primes = append(primes, prime)
 			}
 		case nonPrime, ok := <-nonPrimesChan:
 			if !ok {
 				nonPrimesChan = nil
 			} else {
-				fmt.Printf("%v ", nonPrime)
+				fmt.Printf("Found composite: %v; Probably primes at ", nonPrime)
+				fmt.Println(primes)
 			}
 		}
 		if primesChan == nil && nonPrimesChan == nil {
@@ -54,8 +55,16 @@ func main() {
 	fmt.Println(primes)
 }
 
-func workProducer(start, stop int, workChan, primesChan, nonPrimesChan chan int, wg *sync.WaitGroup) {
-	for i := start; i <= stop; i++ {
+func getArgs() (int, int) {
+	// Get the starting number from CLI argument, or use default
+	s := flag.Int("start", 2, "What number should the test start with.")
+	w := flag.Int("workers", 3, "How many concurrent worker should be started.")
+	flag.Parse()
+	return *s, *w
+}
+
+func workProducer(start int, workChan, primesChan, nonPrimesChan chan int, wg *sync.WaitGroup) {
+	for i := start; ; i++ {
 		workChan <- i
 	}
 	close(workChan)
@@ -75,6 +84,7 @@ func worker(workChan, primesChan, nonPrimesChan chan int, wg *sync.WaitGroup) {
 		if !ok {
 			panic("Couldn't parse number!!!")
 		}
+		fmt.Println("Testing: ", index)
 		if bigNum.ProbablyPrime(0) {
 			primesChan <- index
 			continue
