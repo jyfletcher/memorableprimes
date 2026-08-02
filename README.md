@@ -12,7 +12,7 @@ Note that a value of 10 tests the number: 12345678910987654321
 
 So the size of the numbers, and thus the time to test them, grows quickly.
 
-I've tested up 15530. Nothing found so far. These 12-13k ranges with many workers can spike in memory usage, but generally stay under 100MB.
+I've tested up 15530. Nothing found so far. The OEIS page on this series is here: [A359148 - OEIS](https://oeis.org/A359148). It is said there that the 3rd number in the series must larger than or equal to 60000, but I've not yet gotten to numbers that large. 
 
 ## Usage
 
