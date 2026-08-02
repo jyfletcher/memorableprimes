@@ -29,6 +29,5 @@ It defaults to start=2 and workers=3 if these arguments are not specified.
 ## TODO
 
 - Maybe use some even more simplified non-deterministic primality tests to more quickly get candidates that be tested more thoroughly later. I think, generally, Miller-Rabin is faster than Baille-PSW, but read more into that. The Raku version in this repo uses a Miller-Rabin test that I wrote for this type of speed increase.
-- Save state so that the process can be stopped and restarted
-- Related to the previous item, print the numbers that are being tested on each update, and sorted in numerical order. This allows stopping and starting manually without skipping any numbers. Some numbers can take a very long time, and some are fast, so currently it is diffifult to know if a lower number is still being tested. If you need to cancel and resume then it is not obvious where you need to resume from
-- Profiling. Most of the heavy lifting is done with ProbablyPrime but the task is so CPU intensive that any savings would be valuable
+- Save state so that the process can be stopped and restarted. This is somewhat solved by the better output changes, but those changes require manual handling.
+- Profiling. Most of the heavy lifting is done with ProbablyPrime but the task is so CPU intensive that any savings would be valuable, including not using the built-in ProbablyPrime function as already mentioned.
